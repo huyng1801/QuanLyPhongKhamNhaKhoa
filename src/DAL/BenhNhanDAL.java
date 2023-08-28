@@ -13,7 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.lang.model.util.Types;
+import java.sql.CallableStatement;
 public class BenhNhanDAL {
     public static List<BenhNhanDTO> layDanhSachBenhNhan() {
         List<BenhNhanDTO> danhSachBenhNhan = new ArrayList<>();
@@ -40,7 +41,27 @@ public class BenhNhanDAL {
 
         return danhSachBenhNhan;
     }
+public static String generateMaBenhNhan() {
+    String generatedMaBenhNhan = "";
 
+    try {
+        Connection connection = Database.getConnect();
+
+        CallableStatement callableStatement = connection.prepareCall("{? = call dbo.GenerateMaBenhNhan()}");
+        callableStatement.registerOutParameter(1, java.sql.Types.CHAR);
+        callableStatement.execute();
+
+        generatedMaBenhNhan = callableStatement.getString(1);
+
+        callableStatement.close();
+        connection.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Handle the SQL exception as needed
+    }
+
+    return generatedMaBenhNhan;
+}
     public static boolean themBenhNhan(BenhNhanDTO benhNhan) {
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(

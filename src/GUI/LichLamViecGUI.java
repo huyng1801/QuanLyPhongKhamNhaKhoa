@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class LichLamViecGUI extends javax.swing.JPanel {
-
+   private TableRowSorter<DefaultTableModel> tableRowSorter;
     public LichLamViecGUI() {
         initComponents();
         loadNhaSi();
@@ -60,6 +60,8 @@ public class LichLamViecGUI extends javax.swing.JPanel {
                 lichHen.getSanSang()};
             model.addRow(rowData);
         }
+        tableRowSorter = new TableRowSorter<>(model);
+        tableLichLamViec.setRowSorter(tableRowSorter);
     }
  private void loadNhaSi() {
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
@@ -93,6 +95,9 @@ public class LichLamViecGUI extends javax.swing.JPanel {
         cboSanSang = new javax.swing.JComboBox<>();
         dateChooserNgayLamViec = new com.toedter.calendar.JDateChooser();
         cboMaNhaSi = new javax.swing.JComboBox<>();
+        txtTimKiem = new javax.swing.JTextField();
+        comboBoxTimKiem = new javax.swing.JComboBox<>();
+        btnTimKiem = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1366, 760));
 
@@ -137,6 +142,15 @@ public class LichLamViecGUI extends javax.swing.JPanel {
 
         cboMaNhaSi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
 
+        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã lịch làm việc", "Mã nha sĩ", "Ngày làm việc", "Tình trạng" }));
+
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,7 +181,14 @@ public class LichLamViecGUI extends javax.swing.JPanel {
                 .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1208, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -196,7 +217,12 @@ public class LichLamViecGUI extends javax.swing.JPanel {
                                 .addComponent(jLabel4)
                                 .addComponent(cboSanSang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnXoa))
-                        .addGap(120, 120, 120)))
+                        .addGap(67, 67, 67)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiem)
+                            .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(106, Short.MAX_VALUE))
         );
@@ -270,12 +296,41 @@ public class LichLamViecGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tableLichLamViecMouseClicked
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String searchKeyword = txtTimKiem.getText();
+        int selectedCriteriaIndex = comboBoxTimKiem.getSelectedIndex();
+
+        RowFilter<DefaultTableModel, Object> rowFilter = null;
+
+        // Apply the filter based on the selected search criteria
+        switch (selectedCriteriaIndex) {
+            case 0: // Mã thuốc
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 0); // Apply filter to the first column (index 0)
+            break;
+            case 1: // Tên thuốc
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 1); // Apply filter to the second column (index 1)
+            break;
+            case 2: // Đơn vị tính
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 2); // Apply filter to the third column (index 2)
+            break;
+            case 3: // Đơn giá
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 3); // Apply filter to the fourth column (index 3)
+            break;
+
+        }
+
+        // Apply the filter to the row sorter
+        tableRowSorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboMaNhaSi;
     private javax.swing.JComboBox<String> cboSanSang;
+    private javax.swing.JComboBox<String> comboBoxTimKiem;
     private com.toedter.calendar.JDateChooser dateChooserNgayLamViec;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -284,5 +339,6 @@ public class LichLamViecGUI extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableLichLamViec;
     private javax.swing.JTextField txtMaLichLamViec;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

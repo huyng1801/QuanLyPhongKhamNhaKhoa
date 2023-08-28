@@ -5,21 +5,22 @@
 package GUI;
 
 import BUS.BenhNhanBUS;
-import BUS.NhaSiBUS;
 import DTO.BenhNhanDTO;
 import Utils.BenhNhanUtils;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author huyng
  */
 public class BenhNhanGUI extends javax.swing.JPanel {
-
+  private TableRowSorter<DefaultTableModel> tableRowSorter;
     /**
      * Creates new form NhaSiGUI
      */
@@ -43,6 +44,8 @@ public class BenhNhanGUI extends javax.swing.JPanel {
             Object[] rowData = {benhNhan.getMaBenhNhan(), benhNhan.getTenBenhNhan(), benhNhan.getTuoi(), benhNhan.getGioiTinh(), benhNhan.getSucKhoeRangMieng()};
             model.addRow(rowData);
         }
+            tableRowSorter = new TableRowSorter<>(model);
+    tableBenhNhan.setRowSorter(tableRowSorter);
     }
 
     /**
@@ -71,6 +74,9 @@ public class BenhNhanGUI extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtSucKhoeRangMieng = new javax.swing.JTextArea();
         btnChiTiet = new javax.swing.JButton();
+        txtTimKiem = new javax.swing.JTextField();
+        comboBoxTimKiem = new javax.swing.JComboBox<>();
+        btnTimKiem = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1366, 760));
 
@@ -142,12 +148,21 @@ public class BenhNhanGUI extends javax.swing.JPanel {
             }
         });
 
+        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã bệnh nhân", "Tên bệnh nhân", "Tuổi", "Giới tính", "Sức khỏe răng miệng" }));
+
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(219, Short.MAX_VALUE)
+                .addContainerGap(239, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
@@ -176,10 +191,17 @@ public class BenhNhanGUI extends javax.swing.JPanel {
                     .addComponent(btnThem)
                     .addComponent(btnXoa)
                     .addComponent(btnChiTiet))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(88, 88, 88)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1147, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -208,8 +230,13 @@ public class BenhNhanGUI extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnChiTiet))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem)
+                    .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -346,13 +373,46 @@ public class BenhNhanGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnChiTietActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String searchKeyword = txtTimKiem.getText();
+        int selectedCriteriaIndex = comboBoxTimKiem.getSelectedIndex();
+
+        RowFilter<DefaultTableModel, Object> rowFilter = null;
+
+        // Apply the filter based on the selected search criteria
+        switch (selectedCriteriaIndex) {
+            case 0: // Mã thuốc
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 0); // Apply filter to the first column (index 0)
+            break;
+            case 1: // Tên thuốc
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 1); // Apply filter to the second column (index 1)
+            break;
+            case 2: // Đơn vị tính
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 2); // Apply filter to the third column (index 2)
+            break;
+            case 3: // Đơn giá
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 3); // Apply filter to the fourth column (index 3)
+            break;
+            case 4: // Đơn giá
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 3); // Apply filter to the fourth column (index 3)
+            break;
+
+
+        }
+
+        // Apply the filter to the row sorter
+        tableRowSorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChiTiet;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboGioiTinh;
+    private javax.swing.JComboBox<String> comboBoxTimKiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -364,6 +424,7 @@ public class BenhNhanGUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtMaBenhNhan;
     private javax.swing.JTextArea txtSucKhoeRangMieng;
     private javax.swing.JTextField txtTenBenhNhan;
+    private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTuoi;
     // End of variables declaration//GEN-END:variables
 }

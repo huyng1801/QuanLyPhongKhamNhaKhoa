@@ -35,4 +35,7 @@ public class BenhNhanBUS {
         
          return BenhNhanDAL.layKeHoachDieuTriTheoMaBenhNhan(maBenhNhan);
         }
+    public static String generateMaBenhNhan() {
+    return BenhNhanDAL.generateMaBenhNhan();
+    }
 }

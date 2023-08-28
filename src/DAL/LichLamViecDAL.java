@@ -34,7 +34,37 @@ public class LichLamViecDAL {
 
         return danhSachLichLamViec;
     }
+public static boolean hasScheduleConflict(String nhaSi, Date date) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = Database.getConnect();
+
+            // Truy vấn kiểm tra xem có xung đột lịch làm việc hay không
+            String query = "SELECT COUNT(*) FROM LichLamViec WHERE MaNhaSi = ? AND NgayLamViec = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, nhaSi);
+            preparedStatement.setDate(2, new java.sql.Date(date.getTime()));
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Nếu count > 0, tức là có xung đột
+            }
+
+            return false; // Không có xung đột
+
+        } catch (SQLException e) {
+            // Xử lý exception nếu cần
+            e.printStackTrace();
+            return true; // Tạm thời coq lỗi trong trường hợp xảy ra lỗi SQL
+        } finally {
+            // Đảm bảo đóng resultSet, preparedStatement và connection ở đây
+            // ...
+        }
+    }
     public static boolean themLichLamViec(LichLamViecDTO lichLamViec) {
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(

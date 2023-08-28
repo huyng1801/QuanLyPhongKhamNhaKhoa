@@ -25,4 +25,7 @@ public class LichLamViecBUS {
     public static boolean xoaLichLamViec(int maLichLamViec) {
         return LichLamViecDAL.xoaLichLamViec(maLichLamViec);
     }
+    public static boolean hasScheduleConflict(String nhaSi, Date date) {
+    return LichLamViecDAL.hasScheduleConflict(nhaSi, date);
+    }
 }

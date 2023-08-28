@@ -20,6 +20,7 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
     private NhanVienGUI panelNhanVien;
     private ThuocGUI panelThuoc;
     private BenhNhanGUI panelBenhNhan;
+
     public GiaoDienChinhGUI() {
         initComponents();
         CanGiua();
@@ -34,7 +35,7 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
         int x = (screenWidth - frameWidth) / 2;
         int y = (screenHeight - frameHeight) / 2;
         setLocation(x, y);
-        
+
     }
 
     /**
@@ -63,6 +64,7 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
         menuItemLichLamViec = new javax.swing.JMenuItem();
         menuCuocHen = new javax.swing.JMenu();
         menuItemXemLichHen = new javax.swing.JMenuItem();
+        menuItemDatLichKham = new javax.swing.JMenuItem();
         menuBaoCao = new javax.swing.JMenu();
         menuItemBaoCaoDieuTriTrongNgay = new javax.swing.JMenuItem();
         menuItemBaoCaoCuocHenTrongNgay = new javax.swing.JMenuItem();
@@ -170,6 +172,14 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
         });
         menuCuocHen.add(menuItemXemLichHen);
 
+        menuItemDatLichKham.setText("Đặt lịch khám");
+        menuItemDatLichKham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemDatLichKhamActionPerformed(evt);
+            }
+        });
+        menuCuocHen.add(menuItemDatLichKham);
+
         jMenuBar1.add(menuCuocHen);
 
         menuBaoCao.setText("Báo cáo");
@@ -254,7 +264,7 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
 
     private void menuItemHoSoBenhNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemHoSoBenhNhanActionPerformed
         // TODO add your handling code here:
-              panelBenhNhan = new BenhNhanGUI();
+        panelBenhNhan = new BenhNhanGUI();
         this.panelBenhNhan.setVisible(true);
         this.jPanel2.setLayout(new FlowLayout());
         this.jPanel2.removeAll();
@@ -265,11 +275,11 @@ public class GiaoDienChinhGUI extends javax.swing.JFrame {
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_menuItemHoSoBenhNhanActionPerformed
-private LichHenGUI panelLichHen;
+    private LichHenGUI panelLichHen;
     private void menuItemXemLichHenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemXemLichHenActionPerformed
         // TODO add your handling code here:
-          // TODO add your handling code here:
-              panelLichHen = new LichHenGUI();
+        // TODO add your handling code here:
+        panelLichHen = new LichHenGUI();
         this.panelLichHen.setVisible(true);
         this.jPanel2.setLayout(new FlowLayout());
         this.jPanel2.removeAll();
@@ -280,10 +290,10 @@ private LichHenGUI panelLichHen;
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_menuItemXemLichHenActionPerformed
-private BaoCaoDieuTriGUI panelBaoCaoDieuTri;
+    private BaoCaoDieuTriGUI panelBaoCaoDieuTri;
     private void menuItemBaoCaoDieuTriTrongNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBaoCaoDieuTriTrongNgayActionPerformed
         // TODO add your handling code here:
-               panelBaoCaoDieuTri = new BaoCaoDieuTriGUI();
+        panelBaoCaoDieuTri = new BaoCaoDieuTriGUI();
         this.panelBaoCaoDieuTri.setVisible(true);
         this.jPanel2.setLayout(new FlowLayout());
         this.jPanel2.removeAll();
@@ -294,9 +304,9 @@ private BaoCaoDieuTriGUI panelBaoCaoDieuTri;
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_menuItemBaoCaoDieuTriTrongNgayActionPerformed
-private BaoCaoCuocHenGUI panelBaoCaoCuocHen;
+    private BaoCaoCuocHenGUI panelBaoCaoCuocHen;
     private void menuItemBaoCaoCuocHenTrongNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemBaoCaoCuocHenTrongNgayActionPerformed
-              panelBaoCaoCuocHen = new BaoCaoCuocHenGUI();
+        panelBaoCaoCuocHen = new BaoCaoCuocHenGUI();
         this.panelBaoCaoCuocHen.setVisible(true);
         this.jPanel2.setLayout(new FlowLayout());
         this.jPanel2.removeAll();
@@ -307,10 +317,10 @@ private BaoCaoCuocHenGUI panelBaoCaoCuocHen;
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_menuItemBaoCaoCuocHenTrongNgayActionPerformed
-private LichLamViecGUI panelLichLamViec;
+    private LichLamViecGUI panelLichLamViec;
     private void menuItemLichLamViecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemLichLamViecActionPerformed
         // TODO add your handling code here:
-             panelLichLamViec = new LichLamViecGUI();
+        panelLichLamViec = new LichLamViecGUI();
         this.panelLichLamViec.setVisible(true);
         this.jPanel2.setLayout(new FlowLayout());
         this.jPanel2.removeAll();
@@ -321,6 +331,21 @@ private LichLamViecGUI panelLichLamViec;
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_menuItemLichLamViecActionPerformed
+    private DatLichKhamGUI panelDatLichKham;
+    private void menuItemDatLichKhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemDatLichKhamActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        panelDatLichKham = new DatLichKhamGUI();
+        this.panelDatLichKham.setVisible(true);
+        this.jPanel2.setLayout(new FlowLayout());
+        this.jPanel2.removeAll();
+        this.jPanel2.add(panelDatLichKham, BorderLayout.CENTER);
+        this.jPanel2.updateUI();
+
+        // Cập nhật lại giao diện
+        jPanel2.revalidate();
+        jPanel2.repaint();
+    }//GEN-LAST:event_menuItemDatLichKhamActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,6 +393,7 @@ private LichLamViecGUI panelLichLamViec;
     private javax.swing.JMenuItem menuItemBaoCaoCuocHenTrongNgay;
     private javax.swing.JMenuItem menuItemBaoCaoDieuTriTrongNgay;
     private javax.swing.JMenuItem menuItemDangXuat;
+    private javax.swing.JMenuItem menuItemDatLichKham;
     private javax.swing.JMenuItem menuItemHoSoBenhNhan;
     private javax.swing.JMenuItem menuItemLichLamViec;
     private javax.swing.JMenuItem menuItemNhaSi;
