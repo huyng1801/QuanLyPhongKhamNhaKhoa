@@ -73,8 +73,8 @@
                   <Component id="jScrollPane1" min="-2" pref="1208" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="757" max="-2" attributes="0"/>
-                      <Component id="jLabel7" min="-2" pref="104" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabel7" min="-2" pref="68" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Component id="cboLoc" min="-2" pref="107" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="txtLoc" min="-2" pref="186" max="-2" attributes="0"/>
