@@ -16,16 +16,17 @@ public class LichLamViecDAL {
 
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT MaLichLamViec, MaNhaSi, NgayLamViec, SanSang FROM LichLamViec")) {
+                     "SELECT MaLichLamViec, LichLamViec.MaNhaSi as MaNhaSi, TenNhaSi, NgayLamViec, SanSang FROM LichLamViec JOIN NhaSi ON NhaSi.MaNhaSi = LichLamViec.MaNhaSi")) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int maLichLamViec = resultSet.getInt("MaLichLamViec");
                 String maNhaSi = resultSet.getString("MaNhaSi");
+                String tenNhaSi = resultSet.getString("TenNhaSi");
                 Date ngayLamViec = resultSet.getDate("NgayLamViec");
                 String sanSang = resultSet.getString("SanSang");
-                LichLamViecDTO lichLamViec = new LichLamViecDTO(maLichLamViec, maNhaSi, ngayLamViec, sanSang);
+                LichLamViecDTO lichLamViec = new LichLamViecDTO(maLichLamViec, maNhaSi, tenNhaSi,ngayLamViec, sanSang);
                 danhSachLichLamViec.add(lichLamViec);
             }
         } catch (SQLException e) {

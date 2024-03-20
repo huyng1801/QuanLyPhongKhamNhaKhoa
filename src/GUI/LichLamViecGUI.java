@@ -51,12 +51,13 @@ public class LichLamViecGUI extends javax.swing.JPanel {
         model.setColumnCount(0);
         model.addColumn("Mã lịch làm việc");
         model.addColumn("Mã nha sĩ");
+        model.addColumn("Tên nha sĩ");
         model.addColumn("Ngày làm việc");
         model.addColumn("Tình trạng");
         List<LichLamViecDTO> lichHenDTOList = LichLamViecBUS.layDanhSachLichLamViec();
 
         for (LichLamViecDTO lichHen : lichHenDTOList) {
-            Object[] rowData = {lichHen.getMaLichLamViec(), lichHen.getMaNhaSi(), lichHen.getNgayLamViec(),
+            Object[] rowData = {lichHen.getMaLichLamViec(), lichHen.getMaNhaSi(), lichHen.getTeNhaSi() ,lichHen.getNgayLamViec(),
                 lichHen.getSanSang()};
             model.addRow(rowData);
         }
@@ -64,14 +65,14 @@ public class LichLamViecGUI extends javax.swing.JPanel {
         tableLichLamViec.setRowSorter(tableRowSorter);
     }
  private void loadNhaSi() {
-        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-        cboMaNhaSi.setModel(comboBoxModel); // Set the model for the JComboBox
+          DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+    cboMaNhaSi.setModel(comboBoxModel); // Set the model for the JComboBox
 
-        // Load danh sách nhà sĩ into the JComboBox
-        List<NhaSiDTO> nhaSiDTOList = NhaSiBUS.layDanhSachNhaSi();
-        for (NhaSiDTO nhaSi : nhaSiDTOList) {
-            comboBoxModel.addElement(nhaSi.getMaNhaSi()); // Add each doctor's ID to the JComboBox
-        }
+    // Load danh sách thuốc into the JComboBox
+    List<NhaSiDTO> nhaSiDTO = NhaSiBUS.layDanhSachNhaSi();
+    for (NhaSiDTO nhasi : nhaSiDTO) {
+        comboBoxModel.addElement(nhasi.getMaNhaSi() + "-" + nhasi.getTenNhaSi()); // Add each drug's name to the JComboBox
+    }
     }
  
     /**
@@ -138,11 +139,11 @@ public class LichLamViecGUI extends javax.swing.JPanel {
 
         jLabel4.setText("Trạng thái:");
 
-        cboSanSang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Có thể khám", "Không thể khám" }));
+        cboSanSang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Có thể khám", "Không thể " }));
 
         cboMaNhaSi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
 
-        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã lịch làm việc", "Mã nha sĩ", "Ngày làm việc", "Tình trạng" }));
+        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã lịch làm việc", "Mã nha sĩ", "Tên nha sĩ", "Ngày làm việc", "Tình trạng" }));
 
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
@@ -242,6 +243,7 @@ public class LichLamViecGUI extends javax.swing.JPanel {
 // Chuyển đổi thành java.sql.Date
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         String maNhaSi = (String) cboMaNhaSi.getSelectedItem();
+        maNhaSi = maNhaSi.split("-")[0];
         String tinhTrang = cboSanSang.getSelectedItem().toString();
         
         LichLamViecDTO lichLamViec = new LichLamViecDTO(maNhaSi, sqlDate, tinhTrang);
@@ -284,15 +286,14 @@ public class LichLamViecGUI extends javax.swing.JPanel {
         if (selectedRow >= 0) {
             DefaultTableModel model = (DefaultTableModel) tableLichLamViec.getModel();
             String maLichHen = model.getValueAt(selectedRow, 0).toString();
-            Date thoiGianHen = (Date) model.getValueAt(selectedRow, 2);
-            String maBenhNhan = model.getValueAt(selectedRow, 1).toString();
-            String maNhaSi = model.getValueAt(selectedRow, 3).toString();
-
+            Date thoiGianHen = (Date) model.getValueAt(selectedRow, 3);
+            String tenNhaSi = model.getValueAt(selectedRow, 2).toString();
+            String maNhaSi = model.getValueAt(selectedRow, 1).toString();
+            String sanSang = model.getValueAt(selectedRow, 4).toString();
             txtMaLichLamViec.setText(maLichHen);
             dateChooserNgayLamViec.setDate(thoiGianHen);
-            cboMaNhaSi.setSelectedItem(maBenhNhan);
-            cboMaNhaSi.setSelectedItem(maNhaSi);
-            cboSanSang.setSelectedItem(maNhaSi);
+            cboMaNhaSi.setSelectedItem(maNhaSi + "-" + tenNhaSi);
+            cboSanSang.setSelectedItem(sanSang);
         }
     }//GEN-LAST:event_tableLichLamViecMouseClicked
 
@@ -315,6 +316,9 @@ public class LichLamViecGUI extends javax.swing.JPanel {
             break;
             case 3: // Đơn giá
             rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 3); // Apply filter to the fourth column (index 3)
+            break;
+            case 4: // Đơn giá
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 4); // Apply filter to the fourth column (index 3)
             break;
 
         }

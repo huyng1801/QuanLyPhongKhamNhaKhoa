@@ -17,6 +17,8 @@ import DTO.NhanVienDTO;
 import DTO.RangDTO;
 import DTO.ThuocDTO;
 import Utils.BenhNhanUtils;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -113,6 +115,7 @@ public class KeHoachDieuTriGUI extends javax.swing.JPanel {
         btnXoaDanhMucDieuTri = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableDanhMucDieuTri = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -305,6 +308,13 @@ public class KeHoachDieuTriGUI extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tableDanhMucDieuTri);
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons8-back-20.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -319,16 +329,23 @@ public class KeHoachDieuTriGUI extends javax.swing.JPanel {
                         .addComponent(btnXoaDanhMucDieuTri)))
                 .addGap(65, 65, 65))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel9)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel9)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel1)
                 .addGap(57, 57, 57)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,7 +355,7 @@ public class KeHoachDieuTriGUI extends javax.swing.JPanel {
                     .addComponent(btnXoaDanhMucDieuTri))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -494,7 +511,7 @@ public class KeHoachDieuTriGUI extends javax.swing.JPanel {
                     .addComponent(btnXoaRangDieuTri))
                 .addGap(78, 78, 78)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(btnHoanTat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -606,6 +623,21 @@ System.out.println(sqlDate);
         // Sau khi thêm thành công, cập nhật lại dữ liệu trong JTable hoặc thông báo thành công cho người dùng
     }//GEN-LAST:event_btnHoanTatActionPerformed
 
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        panelChiTietBenhNhan = new ChiTietBenhNhanGUI();
+        this.panelChiTietBenhNhan.setVisible(true);
+        this.setLayout(new FlowLayout());
+        this.removeAll();
+        this.add(panelChiTietBenhNhan, BorderLayout.CENTER);
+        this.updateUI();
+
+        // Cập nhật lại giao diện
+        this.revalidate();
+        this.repaint();
+    }//GEN-LAST:event_jLabel9MouseClicked
+private ChiTietBenhNhanGUI panelChiTietBenhNhan;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHoanTat;
@@ -631,6 +663,7 @@ System.out.println(sqlDate);
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;

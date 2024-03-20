@@ -17,7 +17,7 @@ public class ThuocDAL {
 
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT MaThuoc, TenThuoc, DonViTinh, DonGia FROM Thuoc")) {
+                     "SELECT MaThuoc, TenThuoc, DonViTinh, SoLuong, DonGia FROM Thuoc")) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -25,9 +25,10 @@ public class ThuocDAL {
                 String maThuoc = resultSet.getString("MaThuoc");
                 String tenThuoc = resultSet.getString("TenThuoc");
                 String donViTinh = resultSet.getString("DonViTinh");
+                int soLuong = resultSet.getInt("SoLuong");
                 BigDecimal donGia = resultSet.getBigDecimal("DonGia");
 
-                ThuocDTO thuoc = new ThuocDTO(maThuoc, tenThuoc, donViTinh, donGia);
+                ThuocDTO thuoc = new ThuocDTO(maThuoc, tenThuoc, donViTinh, soLuong, donGia);
                 danhSachThuoc.add(thuoc);
             }
         } catch (SQLException e) {
@@ -40,11 +41,12 @@ public class ThuocDAL {
     public static boolean themThuoc(ThuocDTO thuoc) {
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO Thuoc (MaThuoc, TenThuoc, DonViTinh, DonGia) VALUES (?, ?, ?, ?)")) {
+                     "INSERT INTO Thuoc (MaThuoc, TenThuoc, DonViTinh,SoLuong, DonGia) VALUES (?, ?, ?, ?, ?)")) {
             preparedStatement.setString(1, thuoc.getMaThuoc());
             preparedStatement.setString(2, thuoc.getTenThuoc());
             preparedStatement.setString(3, thuoc.getDonViTinh());
-            preparedStatement.setBigDecimal(4, thuoc.getDonGia());
+             preparedStatement.setInt(4, thuoc.getSoLuong());
+            preparedStatement.setBigDecimal(5, thuoc.getDonGia());
 
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -56,11 +58,12 @@ public class ThuocDAL {
     public static boolean suaThuoc(ThuocDTO thuoc) {
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "UPDATE Thuoc SET TenThuoc = ?, DonViTinh = ?, DonGia = ? WHERE MaThuoc = ?")) {
+                     "UPDATE Thuoc SET TenThuoc = ?, DonViTinh = ?, SoLuong = ?, DonGia = ? WHERE MaThuoc = ?")) {
             preparedStatement.setString(1, thuoc.getTenThuoc());
             preparedStatement.setString(2, thuoc.getDonViTinh());
-            preparedStatement.setBigDecimal(3, thuoc.getDonGia());
-            preparedStatement.setString(4, thuoc.getMaThuoc());
+             preparedStatement.setInt(3, thuoc.getSoLuong());
+            preparedStatement.setBigDecimal(4, thuoc.getDonGia());
+            preparedStatement.setString(5, thuoc.getMaThuoc());
 
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {

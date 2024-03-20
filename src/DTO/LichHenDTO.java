@@ -4,7 +4,9 @@ public class LichHenDTO {
     private String maLichHen;
     private Date thoiGianHen;
     private String maBenhNhan;
+    private String tenBenhNhan;
     private String maNhaSi;
+    private String tenNhaSi;
     private String phongKham;
     private String tinhTrang;
 
@@ -16,6 +18,17 @@ public class LichHenDTO {
         this.thoiGianHen = thoiGianHen;
         this.maBenhNhan = maBenhNhan;
         this.maNhaSi = maNhaSi;
+        this.phongKham = phongKham;
+        this.tinhTrang = tinhTrang;
+    }
+
+    public LichHenDTO(String maLichHen, Date thoiGianHen, String maBenhNhan, String tenBenhNhan, String maNhaSi, String tenNhaSi, String phongKham, String tinhTrang) {
+        this.maLichHen = maLichHen;
+        this.thoiGianHen = thoiGianHen;
+        this.maBenhNhan = maBenhNhan;
+        this.tenBenhNhan = tenBenhNhan;
+        this.maNhaSi = maNhaSi;
+        this.tenNhaSi = tenNhaSi;
         this.phongKham = phongKham;
         this.tinhTrang = tinhTrang;
     }
@@ -44,6 +57,14 @@ public class LichHenDTO {
     }
     public Date getThoiGianHen() {
         return thoiGianHen;
+    }
+
+    public String getTenBenhNhan() {
+        return tenBenhNhan;
+    }
+
+    public String getTenNhaSi() {
+        return tenNhaSi;
     }
     public String getTinhTrang() {
         return tinhTrang;

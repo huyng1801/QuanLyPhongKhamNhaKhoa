@@ -16,7 +16,7 @@ public class LichHenDAL {
 
         try (Connection connection = Database.getConnect();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT MaLichHen, ThoiGianHen, MaBenhNhan, MaNhaSi, PhongKham, TinhTrang FROM LichHen")) {
+                     "SELECT MaLichHen, ThoiGianHen, BenhNhan.MaBenhNhan as MaBenhNhan, TenBenhNhan, NhaSi.MaNhaSi as MaNhaSi, TenNhaSi, PhongKham, TinhTrang FROM LichHen JOIN BenhNhan ON (BenhNhan.MaBenhNhan = LichHen.MaBenhNhan) JOIN NhaSi ON(NhaSi.MaNhaSi = LichHen.MaNhaSi)")) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -24,11 +24,13 @@ public class LichHenDAL {
                 String maLichHen = resultSet.getString("MaLichHen");
                 Date thoiGianHen = resultSet.getDate("ThoiGianHen");
                 String maBenhNhan = resultSet.getString("MaBenhNhan");
+                String tenBenhNhan = resultSet.getString("TenBenhNhan");
                 String maNhaSi = resultSet.getString("MaNhaSi");
+                String tenNhaSi = resultSet.getString("TenNhaSi");
                 String phongKham = resultSet.getString("PhongKham");
                 String tinhTrang = resultSet.getString("TinhTrang");
 
-                LichHenDTO lichHen = new LichHenDTO(maLichHen, thoiGianHen, maBenhNhan, maNhaSi, phongKham, tinhTrang);
+                LichHenDTO lichHen = new LichHenDTO(maLichHen, thoiGianHen, maBenhNhan, tenBenhNhan, maNhaSi, tenNhaSi, phongKham, tinhTrang);
                 danhSachLichHen.add(lichHen);
             }
         } catch (SQLException e) {

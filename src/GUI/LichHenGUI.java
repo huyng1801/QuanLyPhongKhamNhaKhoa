@@ -75,7 +75,7 @@ private void loadBenhNhan() {
     // Load danh sách thuốc into the JComboBox
     List<BenhNhanDTO> benhNhanDTO = BenhNhanBUS.layDanhSachBenhNhan();
     for (BenhNhanDTO benhNhan : benhNhanDTO) {
-        comboBoxModel.addElement(benhNhan.getMaBenhNhan()); // Add each drug's name to the JComboBox
+        comboBoxModel.addElement(benhNhan.getMaBenhNhan() + "-" + benhNhan.getTenBenhNhan()); // Add each drug's name to the JComboBox
     }
 }
 private void loadNhaSi() {
@@ -85,7 +85,7 @@ private void loadNhaSi() {
     // Load danh sách thuốc into the JComboBox
     List<NhaSiDTO> nhaSiDTO = NhaSiBUS.layDanhSachNhaSi();
     for (NhaSiDTO nhasi : nhaSiDTO) {
-        comboBoxModel.addElement(nhasi.getMaNhaSi()); // Add each drug's name to the JComboBox
+        comboBoxModel.addElement(nhasi.getMaNhaSi() + "-" + nhasi.getTenNhaSi()); // Add each drug's name to the JComboBox
     }
 }
  private void applyFilter() {
@@ -108,13 +108,15 @@ private void loadNhaSi() {
         model.addColumn("Mã lịch hẹn");
         model.addColumn("Thời gian hẹn");
         model.addColumn("Mã bệnh nhân");
+        model.addColumn("Tên bệnh nhân");
         model.addColumn("Ma nha sĩ");
+        model.addColumn("Tên nha sĩ");
         model.addColumn("Phòng khám");
         model.addColumn("Tình trạng");
         List<LichHenDTO> lichHenDTO = LichHenBUS.layDanhSachLichHen();
 
         for (LichHenDTO nhaSi : lichHenDTO) {
-            Object[] rowData = {nhaSi.getMaLichHen(), nhaSi.getThoiGianHen(), nhaSi.getMaBenhNhan(), nhaSi.getMaNhaSi(), nhaSi.getPhongKham(), nhaSi.getTinhTrang()};
+            Object[] rowData = {nhaSi.getMaLichHen(), nhaSi.getThoiGianHen(), nhaSi.getMaBenhNhan(), nhaSi.getTenBenhNhan(), nhaSi.getMaNhaSi(), nhaSi.getTenNhaSi(), nhaSi.getPhongKham(), nhaSi.getTinhTrang()};
             model.addRow(rowData);
         }
     }
@@ -195,7 +197,7 @@ private void loadNhaSi() {
 
         cboBenhNhan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
 
-        cboLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thời gian hẹn", "Mã bệnh nhân", "Mã nha sĩ", "Phòng khám" }));
+        cboLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã lịch hẹn", "Thời gian hẹn", "Mã bệnh nhân", "Tên bệnh nhân", "Mã nha sĩ", "Tên nha sĩ", "Phòng khám", "Tình trạng" }));
 
         jLabel7.setText("Lọc theo:");
 
@@ -311,7 +313,9 @@ private void loadNhaSi() {
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         System.out.println(sqlDate);
         String maBenhNhan = (String) cboBenhNhan.getSelectedItem();
+        maBenhNhan = maBenhNhan.split("-")[0];
         String maNhaSi = (String) cboNhaSi.getSelectedItem();
+        maNhaSi = maNhaSi.split("-")[0];
         String phongKham = txtPhongKham.getText();
         String tinhTrang = txtTinhTrang.getText();
         LichHenDTO lichHenDTO = new LichHenDTO(sqlDate, maBenhNhan, maNhaSi, phongKham, tinhTrang);
@@ -367,10 +371,10 @@ private void loadNhaSi() {
             // Lấy giá trị từ các cột của hàng được chọn
             String maLichHen = tableLichHen.getValueAt(selectedRow, 0).toString();
             String thoiGianHen = tableLichHen.getValueAt(selectedRow, 1).toString();
-            String maBenhNhan = tableLichHen.getValueAt(selectedRow, 2).toString();
-            String maNhaSi = tableLichHen.getValueAt(selectedRow, 3).toString();
-            String phongKham = tableLichHen.getValueAt(selectedRow, 4).toString();
-            String tinhTrang = tableLichHen.getValueAt(selectedRow, 5).toString();
+            String maBenhNhan = tableLichHen.getValueAt(selectedRow, 2).toString() + "-" + tableLichHen.getValueAt(selectedRow, 3).toString();
+            String maNhaSi = tableLichHen.getValueAt(selectedRow, 4).toString() + "-" + tableLichHen.getValueAt(selectedRow, 5).toString();
+            String phongKham = tableLichHen.getValueAt(selectedRow, 6).toString();
+            String tinhTrang = tableLichHen.getValueAt(selectedRow, 7).toString();
             // Điền dữ liệu vào các trường tương ứng
             txtMaLichHen.setText(maLichHen);
             cboBenhNhan.setSelectedItem(maBenhNhan);

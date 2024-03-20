@@ -40,11 +40,12 @@ public class ThuocGUI extends javax.swing.JPanel {
         model.addColumn("Mã thuốc");
         model.addColumn("Tên thuốc");
         model.addColumn("Đơn vị tính");
+        model.addColumn("Số lượng");
         model.addColumn("Đơn giá");
         List<ThuocDTO> danhSachThuoc = ThuocBUS.layDanhSachThuoc();
 
         for (ThuocDTO nhaSi : danhSachThuoc) {
-            Object[] rowData = {nhaSi.getMaThuoc(), nhaSi.getTenThuoc(), nhaSi.getDonViTinh(), nhaSi.getDonGia()};
+            Object[] rowData = {nhaSi.getMaThuoc(), nhaSi.getTenThuoc(), nhaSi.getDonViTinh(), nhaSi.getSoLuong(), nhaSi.getDonGia()};
             model.addRow(rowData);
         }
         tableRowSorter = new TableRowSorter<>(model);
@@ -76,6 +77,8 @@ public class ThuocGUI extends javax.swing.JPanel {
         txtTimKiem = new javax.swing.JTextField();
         btnTimKiem = new javax.swing.JButton();
         comboBoxTimKiem = new javax.swing.JComboBox<>();
+        txtSoLuong = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1366, 760));
 
@@ -133,39 +136,46 @@ public class ThuocGUI extends javax.swing.JPanel {
             }
         });
 
-        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã thuốc", "Tên thuốc", "Đơn vị tính", "Đơn giá" }));
+        comboBoxTimKiem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã thuốc", "Tên thuốc", "Đơn vị tính", "Số lượng", "Đơn giá" }));
+
+        jLabel5.setText("Số lượng:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addContainerGap(111, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1173, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(103, 103, 103)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtDonViTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtDonViTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(99, 99, 99)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(99, 99, 99)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtTenThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtTenThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(110, 110, 110)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSua)
@@ -176,9 +186,8 @@ public class ThuocGUI extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)))
-                        .addGap(18, 18, 18)
                         .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +199,13 @@ public class ThuocGUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnSua)
                         .addGap(18, 18, 18)
-                        .addComponent(btnXoa))
+                        .addComponent(btnXoa)
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTimKiem)
+                            .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -199,8 +214,8 @@ public class ThuocGUI extends javax.swing.JPanel {
                                     .addComponent(txtTenThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel1)
@@ -209,15 +224,13 @@ public class ThuocGUI extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(txtDonViTinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(33, 33, 33)))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem)
-                    .addComponent(comboBoxTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -226,8 +239,9 @@ public class ThuocGUI extends javax.swing.JPanel {
         String maThuoc = txtThuoc.getText();
         String tenThuoc = txtTenThuoc.getText();
         String donViTinh = txtDonViTinh.getText();
+        int soLuong = Integer.parseInt(txtSoLuong.getText());
         BigDecimal donGia = new BigDecimal(txtDonGia.getText());
-        ThuocDTO thuocDTO = new ThuocDTO(maThuoc, tenThuoc, donViTinh, donGia);
+        ThuocDTO thuocDTO = new ThuocDTO(maThuoc, tenThuoc, donViTinh, soLuong, donGia);
         // Gọi phương thức ThuocBUS.themThuoc(nhaSiDTO) để thêm nhà sĩ vào cơ sở dữ liệu
         if (ThuocBUS.themThuoc(thuocDTO)) {
             JOptionPane.showMessageDialog(this, "Thêm thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -281,12 +295,14 @@ public class ThuocGUI extends javax.swing.JPanel {
             String maThuoc = tableThuoc.getValueAt(selectedRow, 0).toString();
             String tenThuoc = tableThuoc.getValueAt(selectedRow, 1).toString();
             String donViTinh = tableThuoc.getValueAt(selectedRow, 2).toString();
-            String donGia = tableThuoc.getValueAt(selectedRow, 3).toString();
+            String soLuong = tableThuoc.getValueAt(selectedRow, 3).toString();
+            String donGia = tableThuoc.getValueAt(selectedRow, 4).toString();
 
             // Điền dữ liệu vào các trường tương ứng
             txtThuoc.setText(maThuoc);
             txtTenThuoc.setText(tenThuoc);
             txtDonViTinh.setText(donViTinh);
+            txtSoLuong.setText(soLuong);
             txtDonGia.setText(donGia);
         }
     }//GEN-LAST:event_tableThuocMouseClicked
@@ -304,8 +320,9 @@ public class ThuocGUI extends javax.swing.JPanel {
         String maThuoc = tableThuoc.getValueAt(selectedRow, 0).toString();
         String tenThuoc = txtTenThuoc.getText();;
         String donViTinh = txtDonViTinh.getText();
+        int soLuong = Integer.parseInt(txtSoLuong.getText());
         BigDecimal donGia = new BigDecimal(txtDonGia.getText());
-        ThuocDTO nhaSiDTO = new ThuocDTO(maThuoc, tenThuoc, donViTinh, donGia);
+        ThuocDTO nhaSiDTO = new ThuocDTO(maThuoc, tenThuoc, donViTinh,soLuong, donGia);
         // Gọi phương thức ThuocBUS.themThuoc(nhaSiDTO) để thêm nhà sĩ vào cơ sở dữ liệu
         if (ThuocBUS.suaThuoc(nhaSiDTO)) {
             JOptionPane.showMessageDialog(this, "Sửa thuốc thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -337,6 +354,9 @@ public class ThuocGUI extends javax.swing.JPanel {
         case 3: // Đơn giá
             rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 3); // Apply filter to the fourth column (index 3)
             break;
+             case 4: // Đơn giá
+            rowFilter = RowFilter.regexFilter("(?i)" + searchKeyword, 4); // Apply filter to the fourth column (index 3)
+            break;
     }
 
     // Apply the filter to the row sorter
@@ -354,10 +374,12 @@ public class ThuocGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableThuoc;
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtDonViTinh;
+    private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenThuoc;
     private javax.swing.JTextField txtThuoc;
     private javax.swing.JTextField txtTimKiem;
